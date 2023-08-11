@@ -1,0 +1,19 @@
+委派模式论述:
+    委派Delegate模式
+    实现层面上, 定义一个抽象接口, 它有若干实现类, 他们真正执行业务方法, 这些子类是具体任务角色;
+    定义委派者角色也实现该接口, 但它负责在各个具体角色实例之间做出决策, 由它判断并调用具体实现的方法。
+
+委派模式理论
+    委派模式(Delegate):
+        抽象任务角色：抽象出需要执行任务的方法。
+        委派者角色：在执行任务中调用具体任务角色的任务，达到委派的作用。
+        具体任务角色：角色的任务交由委派者角色去执行。
+
+Spring MVC框架中的DispatcherServlet相当于委派者，其他的解析器相当执行者。
+    DispatcherServlet的委托流程
+        用户发送请求——>DispatcherServlet，前端控制器收到请求后自己不进行处理，而是委托给其他的解析器进行处理，作为统一访问点，进行全局的流程控制。
+        DispatcherServlet——>HandlerMapping，映射处理器将会把请求映射为HandlerExecutionChain对象（包含一个Handler处理器（页面控制器）对象、多个HandlerInterceptor拦截器）对象。
+        DispatcherServlet——>HandlerAdapter，处理器适配器将会把处理器包装为适配器，从而支持多种类型的处理器，即适配器设计模式的应用，从而很容易支持很多类型的处理器。
+        DispatcherServlet——> ViewResolver， 视图解析器将把ModelAndView对象（包含模型数据、逻辑视图名）解析为具体的View。
+        DispatcherServlet——>View，View会根据传进来的Model模型数据进行渲染，此处的Model实际是一个Map数据结构。
+        返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。
